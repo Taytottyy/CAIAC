@@ -1,0 +1,211 @@
+<title>What's New in AI Safety</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Lato:wght@400;700&display=swap">
+<style>
+/* Layout: LessWrong-style wiki page. Sticky month sidebar on the left, one reading column of post rows grouped by month. */
+:root {
+  --bg: #FFFFFF; --ink: rgba(0,0,0,0.87); --ink-2: rgba(0,0,0,0.55); --ink-3: rgba(0,0,0,0.4);
+  --head: #424242; --rule: rgba(0,0,0,0.1); --hover: rgba(0,0,0,0.04); --green: #5f9b65; --pop: #FFFFFF;
+  --serif: Palatino, "Palatino Linotype", "Book Antiqua", "EB Garamond", Georgia, serif;
+  --sans: "Gill Sans", "Gill Sans MT", Calibri, Lato, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1C1C1C; --ink: rgba(255,255,255,0.87); --ink-2: rgba(255,255,255,0.6); --ink-3: rgba(255,255,255,0.42);
+  --head: #D6D6D6; --rule: rgba(255,255,255,0.12); --hover: rgba(255,255,255,0.05); --green: #7fbf86; --pop: #262626; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #1C1C1C; --ink: rgba(255,255,255,0.87); --ink-2: rgba(255,255,255,0.6); --ink-3: rgba(255,255,255,0.42);
+  --head: #D6D6D6; --rule: rgba(255,255,255,0.12); --hover: rgba(255,255,255,0.05); --green: #7fbf86; --pop: #262626; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.35 }
+a { color: inherit; text-decoration: none }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 2px }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg) }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--rule);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.bar-in { max-width: 1100px; margin: 0 auto; height: 56px; display: flex; align-items: center; justify-content: space-between }
+.logo { font-family: var(--serif); font-size: 17px; letter-spacing: 0.12em; color: var(--ink) }
+.bar-links { display: flex; gap: 22px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-2) }
+.bar-links a:hover { color: var(--ink) }
+
+.page { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 0 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 80px }
+
+.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 72px); align-self: start; margin-top: 18px; border-left: 1px solid var(--ink-3); padding-left: 10px; display: grid; gap: 2px; max-height: calc(100vh - 100px); overflow-y: auto }
+.toc .t { font-family: var(--serif); font-variant: small-caps; font-size: 15px; color: var(--ink); margin-bottom: 8px; line-height: 1.1 }
+.toc a { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--ink-2); padding: 3px 0 }
+.toc a:hover, .toc a.on { color: var(--ink) }
+.toc a.on { font-weight: 700 }
+.toc a span:last-child { color: var(--ink-3); font-variant-numeric: tabular-nums }
+
+main { max-width: 720px; min-width: 0; padding-top: 40px }
+h1 { font-family: var(--sans); font-weight: 600; font-size: clamp(28px, 6vw, 39px); color: var(--head); margin: 0; line-height: 1.05 }
+.meta { color: var(--ink-2); font-size: 15px; margin-top: 10px }
+.meta b { color: var(--ink-2) }
+
+.notable { margin-top: 28px; padding-left: 18px; display: grid; gap: 6px }
+.notable h2, .list-head h2 { font-family: var(--serif); font-weight: 500; font-size: 18px; color: var(--ink-2); margin: 0 0 4px -18px }
+.notable li { font-size: 15.5px; line-height: 1.4 }
+.notable li a { color: var(--green) }
+.notable li a:hover { text-decoration: underline }
+.notable li span { color: var(--ink-3); font-size: 13px; margin-left: 4px }
+.notable ul { margin: 0; padding: 0; display: grid; gap: 6px }
+
+.list-head { margin-top: 36px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid var(--rule); padding-bottom: 6px }
+.list-head h2 { margin: 0; font-style: italic }
+.sorts { display: flex; flex-wrap: wrap; gap: 4px 14px }
+.sorts button { all: unset; cursor: pointer; font-size: 14px; color: var(--ink-3) }
+.sorts button[aria-pressed="true"] { color: var(--green) }
+.sorts button:focus-visible { outline: 2px solid var(--green) }
+
+.month { scroll-margin-top: 70px }
+.month h3 { font-family: var(--serif); font-weight: 400; font-size: 15px; font-variant: small-caps; letter-spacing: 0.04em; color: var(--ink-2); margin: 22px 0 2px }
+.row { display: grid; grid-template-columns: 54px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 8px 6px; border-bottom: 1px solid var(--rule); min-height: 40px }
+.row:hover { background: var(--hover) }
+.src { font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); text-align: center; line-height: 1.1 }
+.ttl { font-family: var(--serif); font-size: 16.9px; color: var(--ink); min-width: 0; line-height: 1.3 }
+.ttl:hover { color: var(--ink-2) }
+.ttl .star { color: var(--green); font-size: 13px; margin-left: 6px; font-family: var(--sans) }
+.ttl .new { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin: 0 0 3px 6px }
+.right { display: flex; gap: 14px; color: var(--ink-3); font-size: 14px; white-space: nowrap }
+.right .who { color: var(--ink-2) }
+.more { all: unset; cursor: pointer; display: block; margin-top: 14px; font-size: 14px; color: var(--green) }
+.more:hover { text-decoration: underline }
+
+.sources { margin-top: 48px; padding-top: 14px; border-top: 1px solid var(--rule); font-size: 14px; color: var(--ink-2); display: grid; gap: 6px }
+.sources h2 { font-family: var(--serif); font-weight: 500; font-size: 18px; margin: 0 0 4px }
+.sources a { color: var(--green) }
+.sources a:hover { text-decoration: underline }
+
+.pop { position: fixed; z-index: 20; width: 380px; max-width: calc(100vw - 32px); background: var(--pop); color: var(--ink); padding: 14px 16px; border-radius: 3px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.16), 0 6px 24px rgba(0,0,0,0.14); display: grid; gap: 6px; pointer-events: none }
+.pop .m { font-size: 13px; color: var(--ink-3) }
+.pop .h { font-family: var(--serif); font-size: 19px; line-height: 1.25 }
+.pop .s { font-size: 14px; color: var(--ink-2); line-height: 1.45 }
+
+@media (max-width: 900px) {
+  .page { grid-template-columns: minmax(0, 1fr) }
+  .toc { display: none }
+}
+@media (max-width: 560px) {
+  .row { grid-template-columns: minmax(0, 1fr); gap: 3px }
+  .src { text-align: left; order: 2 }
+  .right { order: 3; font-size: 13px }
+  .src, .right { display: inline }
+  .bar-links a:first-child { display: none }
+}
+</style>
+
+<header class="bar"><div class="bar-in">
+  <a class="logo" href="#top">CAIAC</a>
+  <nav class="bar-links"><a href="#notable">Notable</a><a href="#sources">Sources</a></nav>
+</div></header>
+
+<div class="page" id="top">
+  <aside class="toc" aria-label="Months"><div class="t">What's New</div><div id="toc"></div></aside>
+  <main>
+    <h1>What's New in AI Safety</h1>
+    <p class="meta" id="meta"></p>
+
+    <section class="notable" id="notable"><h2>Notable</h2><ul id="notable-list"></ul></section>
+
+    <div class="list-head">
+      <h2>Recent posts</h2>
+      <div class="sorts" id="sorts" role="group" aria-label="Filter by source"></div>
+    </div>
+    <div id="feed"></div>
+    <button class="more" id="more">Load all</button>
+
+    <section class="sources" id="sources"><h2>Sources</h2><div id="src-list"></div></section>
+  </main>
+</div>
+<div class="pop" id="pop" hidden></div>
+
+<script>
+const POSTS = /*__POSTS__*/[];
+const UPDATED = "/*__UPDATED__*/";
+const SOURCES = [
+  { name: "AI Safety Newsletter", ab: "AISN", who: "CAIS", url: "https://newsletter.safe.ai/" },
+  { name: "Don't Worry About the Vase", ab: "Zvi", who: "Zvi", url: "https://thezvi.substack.com/" },
+  { name: "The Power Law", ab: "Power Law", who: "P. Wildeford", url: "https://blog.peterwildeford.com/" },
+  { name: "AI Safety Papers", ab: "Papers", who: "Papers digest", url: "https://onexerxes.substack.com/" },
+  { name: "Hyperdimensional", ab: "Hyper­dim", who: "Dean Ball", url: "https://www.hyperdimensional.co/" },
+];
+const SRC = Object.fromEntries(SOURCES.map(s => [s.name, s]));
+const MON = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const day = d => new Date(d + "T12:00:00Z").getTime();
+const NOW = day(UPDATED);
+const age = d => { const n = Math.round((NOW - day(d)) / 864e5); return n < 1 ? "today" : n < 7 ? n + "d" : n < 60 ? Math.round(n / 7) + "w" : Math.round(n / 30) + "mo"; };
+const fmt = d => `${+d.slice(8)} ${MON[+d.slice(5, 7) - 1].slice(0, 3)} ${d.slice(0, 4)}`;
+const clean = p => { const t = p.source === "AI Safety Newsletter" ? p.title.replace(/^(AI Safety Newsletter|AISN)\s*#\d+:\s*/, "") : p.title; return t[0].toUpperCase() + t.slice(1); };
+const isNotable = p => p.source === "AI Safety Newsletter";
+
+// posts since last visit get a dot
+let lastVisit = null;
+try { lastVisit = localStorage.getItem("caiac-last"); localStorage.setItem("caiac-last", UPDATED); } catch (e) {}
+const isNew = p => lastVisit && p.date > lastVisit;
+
+const weekAgo = POSTS.filter(p => NOW - day(p.date) <= 7 * 864e5).length;
+$("#meta").innerHTML = `Updated <b>${fmt(UPDATED)}</b> · ${weekAgo} new this week · ${POSTS.length} posts from ${SOURCES.length} sources`;
+
+$("#notable-list").innerHTML = POSTS.filter(isNotable).slice(0, 5).map(p =>
+  `<li><a href="${esc(p.url)}" target="_blank" rel="noopener" data-u="${esc(p.url)}">${esc(clean(p))}</a><span>${age(p.date)}</span></li>`).join("");
+
+const active = new Set(["all"]);
+const sorts = $("#sorts");
+[{ k: "all", l: "All" }, { k: "notable", l: "Notable" }, ...SOURCES.map(s => ({ k: s.name, l: s.ab.replace("­", "") }))].forEach(o => {
+  const b = document.createElement("button");
+  b.textContent = o.l; b.id = "f-" + o.k.replace(/\W/g, ""); b.setAttribute("aria-pressed", o.k === "all");
+  b.onclick = () => { active.clear(); active.add(o.k); sorts.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); showAll = false; render(); };
+  sorts.append(b);
+});
+
+let showAll = false;
+function render() {
+  const k = [...active][0];
+  const list = POSTS.filter(p => k === "all" || (k === "notable" ? isNotable(p) : p.source === k));
+  const shown = showAll ? list : list.slice(0, 40);
+  const groups = [];
+  shown.forEach(p => { const m = p.date.slice(0, 7); if (!groups.length || groups.at(-1).m !== m) groups.push({ m, ps: [] }); groups.at(-1).ps.push(p); });
+  $("#feed").innerHTML = groups.map(g => `<section class="month" id="m-${g.m}"><h3>${MON[+g.m.slice(5) - 1]} ${g.m.slice(0, 4)}</h3>
+    ${g.ps.map(p => { const s = SRC[p.source]; return `<div class="row"><span class="src">${s.ab}</span>
+      <a class="ttl" href="${esc(p.url)}" target="_blank" rel="noopener" data-u="${esc(p.url)}">${esc(clean(p))}${isNotable(p) ? `<span class="star" title="Notable">★</span>` : ""}${isNew(p) ? `<span class="new" title="New since your last visit"></span>` : ""}</a>
+      <span class="right"><span class="who">${esc(s.who)}</span><span>${age(p.date)}</span></span></div>`; }).join("")}</section>`).join("");
+  $("#more").hidden = showAll || shown.length >= list.length;
+  $("#toc").innerHTML = groups.map(g => `<a href="#m-${g.m}" data-m="${g.m}"><span>${MON[+g.m.slice(5) - 1].slice(0, 3)} ${g.m.slice(0, 4)}</span><span>${g.ps.length}</span></a>`).join("");
+  watchToc();
+}
+$("#more").onclick = () => { showAll = true; render(); };
+
+let tocObs;
+function watchToc() {
+  if (!("IntersectionObserver" in window)) return;
+  tocObs?.disconnect();
+  tocObs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) document.querySelectorAll("#toc a").forEach(a => a.classList.toggle("on", a.dataset.m === e.target.id.slice(2))); }), { rootMargin: "-20% 0px -70% 0px" });
+  document.querySelectorAll(".month").forEach(m => tocObs.observe(m));
+}
+
+// LessWrong-style hover previews
+const BY = Object.fromEntries(POSTS.map(p => [p.url, p]));
+const pop = $("#pop");
+document.addEventListener("mouseover", e => {
+  const a = e.target.closest("[data-u]"); if (!a || !matchMedia("(hover: hover)").matches) return;
+  const p = BY[a.dataset.u]; if (!p) return;
+  pop.innerHTML = `<span class="m">${esc(p.source)} · ${fmt(p.date)}</span><span class="h">${esc(clean(p))}</span>${p.summary ? `<span class="s">${esc(p.summary)}</span>` : ""}`;
+  pop.hidden = false;
+  const r = a.getBoundingClientRect();
+  let x = Math.min(r.left, innerWidth - pop.offsetWidth - 16), y = r.bottom + 8;
+  if (y + pop.offsetHeight > innerHeight - 8) y = r.top - pop.offsetHeight - 8;
+  pop.style.left = Math.max(16, x) + "px"; pop.style.top = y + "px";
+});
+document.addEventListener("mouseout", e => { if (e.target.closest("[data-u]")) pop.hidden = true; });
+addEventListener("scroll", () => { pop.hidden = true; }, { passive: true });
+
+$("#src-list").innerHTML = SOURCES.map(s => `<div><a href="${s.url}" target="_blank" rel="noopener">${esc(s.name)}</a> · ${esc(s.who)}</div>`).join("") +
+  `<div>X lists: <a href="https://x.com/i/lists/1528305432015556608" target="_blank" rel="noopener">@tkrdan</a> · <a href="https://x.com/i/lists/1556976892959498240" target="_blank" rel="noopener">@kubanetics</a></div>`;
+
+render();
+</script>

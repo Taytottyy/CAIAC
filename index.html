@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>body{margin:0}[hidden]{display:none!important}</style>
+</head>
+<body>
+<title>What's New in AI Safety</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Lato:wght@400;700&display=swap">
+<style>
+/* Layout: LessWrong-style wiki page. Sticky month sidebar on the left, one reading column of post rows grouped by month. */
+:root {
+  --bg: #FFFFFF; --ink: rgba(0,0,0,0.87); --ink-2: rgba(0,0,0,0.55); --ink-3: rgba(0,0,0,0.4);
+  --head: #424242; --rule: rgba(0,0,0,0.1); --hover: rgba(0,0,0,0.04); --green: #5f9b65; --pop: #FFFFFF;
+  --serif: Palatino, "Palatino Linotype", "Book Antiqua", "EB Garamond", Georgia, serif;
+  --sans: "Gill Sans", "Gill Sans MT", Calibri, Lato, "Helvetica Neue", Arial, sans-serif;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #1C1C1C; --ink: rgba(255,255,255,0.87); --ink-2: rgba(255,255,255,0.6); --ink-3: rgba(255,255,255,0.42);
+  --head: #D6D6D6; --rule: rgba(255,255,255,0.12); --hover: rgba(255,255,255,0.05); --green: #7fbf86; --pop: #262626; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #1C1C1C; --ink: rgba(255,255,255,0.87); --ink-2: rgba(255,255,255,0.6); --ink-3: rgba(255,255,255,0.42);
+  --head: #D6D6D6; --rule: rgba(255,255,255,0.12); --hover: rgba(255,255,255,0.05); --green: #7fbf86; --pop: #262626; color-scheme: dark }
+
+* { box-sizing: border-box }
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15px; line-height: 1.35 }
+a { color: inherit; text-decoration: none }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 2px }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg) }
+
+.bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--rule);
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.bar-in { max-width: 1100px; margin: 0 auto; height: 56px; display: flex; align-items: center; justify-content: space-between }
+.logo { font-family: var(--serif); font-size: 17px; letter-spacing: 0.12em; color: var(--ink) }
+.bar-links { display: flex; gap: 22px; font-size: 13px; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-2) }
+.bar-links a:hover { color: var(--ink) }
+
+.page { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 200px minmax(0, 1fr); gap: 0 40px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 0 80px }
+
+.toc { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 72px); align-self: start; margin-top: 18px; border-left: 1px solid var(--ink-3); padding-left: 10px; display: grid; gap: 2px; max-height: calc(100vh - 100px); overflow-y: auto }
+.toc .t { font-family: var(--serif); font-variant: small-caps; font-size: 15px; color: var(--ink); margin-bottom: 8px; line-height: 1.1 }
+.toc a { display: flex; justify-content: space-between; gap: 8px; font-size: 13px; color: var(--ink-2); padding: 3px 0 }
+.toc a:hover, .toc a.on { color: var(--ink) }
+.toc a.on { font-weight: 700 }
+.toc a span:last-child { color: var(--ink-3); font-variant-numeric: tabular-nums }
+
+main { max-width: 720px; min-width: 0; padding-top: 40px }
+h1 { font-family: var(--sans); font-weight: 600; font-size: clamp(28px, 6vw, 39px); color: var(--head); margin: 0; line-height: 1.05 }
+.meta { color: var(--ink-2); font-size: 15px; margin-top: 10px }
+.meta b { color: var(--ink-2) }
+
+.notable { margin-top: 28px; padding-left: 18px; display: grid; gap: 6px }
+.notable h2, .list-head h2 { font-family: var(--serif); font-weight: 500; font-size: 18px; color: var(--ink-2); margin: 0 0 4px -18px }
+.notable li { font-size: 15.5px; line-height: 1.4 }
+.notable li a { color: var(--green) }
+.notable li a:hover { text-decoration: underline }
+.notable li span { color: var(--ink-3); font-size: 13px; margin-left: 4px }
+.notable ul { margin: 0; padding: 0; display: grid; gap: 6px }
+
+.list-head { margin-top: 36px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 8px; border-bottom: 1px solid var(--rule); padding-bottom: 6px }
+.list-head h2 { margin: 0; font-style: italic }
+.sorts { display: flex; flex-wrap: wrap; gap: 4px 14px }
+.sorts button { all: unset; cursor: pointer; font-size: 14px; color: var(--ink-3) }
+.sorts button[aria-pressed="true"] { color: var(--green) }
+.sorts button:focus-visible { outline: 2px solid var(--green) }
+
+.month { scroll-margin-top: 70px }
+.month h3 { font-family: var(--serif); font-weight: 400; font-size: 15px; font-variant: small-caps; letter-spacing: 0.04em; color: var(--ink-2); margin: 22px 0 2px }
+.row { display: grid; grid-template-columns: 54px minmax(0, 1fr) auto; align-items: center; gap: 10px; padding: 8px 6px; border-bottom: 1px solid var(--rule); min-height: 40px }
+.row:hover { background: var(--hover) }
+.src { font-size: 10.5px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); text-align: center; line-height: 1.1 }
+.ttl { font-family: var(--serif); font-size: 16.9px; color: var(--ink); min-width: 0; line-height: 1.3 }
+.ttl:hover { color: var(--ink-2) }
+.ttl .star { color: var(--green); font-size: 13px; margin-left: 6px; font-family: var(--sans) }
+.ttl .new { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--green); margin: 0 0 3px 6px }
+.right { display: flex; gap: 14px; color: var(--ink-3); font-size: 14px; white-space: nowrap }
+.right .who { color: var(--ink-2) }
+.more { all: unset; cursor: pointer; display: block; margin-top: 14px; font-size: 14px; color: var(--green) }
+.more:hover { text-decoration: underline }
+
+.sources { margin-top: 48px; padding-top: 14px; border-top: 1px solid var(--rule); font-size: 14px; color: var(--ink-2); display: grid; gap: 6px }
+.sources h2 { font-family: var(--serif); font-weight: 500; font-size: 18px; margin: 0 0 4px }
+.sources a { color: var(--green) }
+.sources a:hover { text-decoration: underline }
+
+.pop { position: fixed; z-index: 20; width: 380px; max-width: calc(100vw - 32px); background: var(--pop); color: var(--ink); padding: 14px 16px; border-radius: 3px;
+  box-shadow: 0 1px 6px rgba(0,0,0,0.16), 0 6px 24px rgba(0,0,0,0.14); display: grid; gap: 6px; pointer-events: none }
+.pop .m { font-size: 13px; color: var(--ink-3) }
+.pop .h { font-family: var(--serif); font-size: 19px; line-height: 1.25 }
+.pop .s { font-size: 14px; color: var(--ink-2); line-height: 1.45 }
+
+@media (max-width: 900px) {
+  .page { grid-template-columns: minmax(0, 1fr) }
+  .toc { display: none }
+}
+@media (max-width: 560px) {
+  .row { grid-template-columns: minmax(0, 1fr); gap: 3px }
+  .src { text-align: left; order: 2 }
+  .right { order: 3; font-size: 13px }
+  .src, .right { display: inline }
+  .bar-links a:first-child { display: none }
+}
+</style>
+
+<header class="bar"><div class="bar-in">
+  <a class="logo" href="#top">CAIAC</a>
+  <nav class="bar-links"><a href="#notable">Notable</a><a href="#sources">Sources</a></nav>
+</div></header>
+
+<div class="page" id="top">
+  <aside class="toc" aria-label="Months"><div class="t">What's New</div><div id="toc"></div></aside>
+  <main>
+    <h1>What's New in AI Safety</h1>
+    <p class="meta" id="meta"></p>
+
+    <section class="notable" id="notable"><h2>Notable</h2><ul id="notable-list"></ul></section>
+
+    <div class="list-head">
+      <h2>Recent posts</h2>
+      <div class="sorts" id="sorts" role="group" aria-label="Filter by source"></div>
+    </div>
+    <div id="feed"></div>
+    <button class="more" id="more">Load all</button>
+
+    <section class="sources" id="sources"><h2>Sources</h2><div id="src-list"></div></section>
+  </main>
+</div>
+<div class="pop" id="pop" hidden></div>
+
+<script>
+const POSTS = [{"source": "Don't Worry About the Vase", "title": "Anthropic Files Its S-1", "url": "https://thezvi.substack.com/p/anthropic-files-its-s-1", "date": "2026-10-28", "summary": ""}, {"source": "AI Safety Newsletter", "title": "AISN #84: AI-Driven Cybersecurity Issues Heighten Fears of “Hackpocalypse”", "url": "https://newsletter.safe.ai/p/aisn-84-ai-driven-cybersecurity-issues", "date": "2026-10-27", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "Anthropic Versus Anthropic", "url": "https://thezvi.substack.com/p/anthropic-versus-anthropic", "date": "2026-10-27", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "Gemini 4 Argon: The Model and Safety Cards", "url": "https://thezvi.substack.com/p/gemini-4-argon-the-model-and-safety", "date": "2026-10-26", "summary": ""}, {"source": "AI Safety Papers", "title": "Training natural schemers, model organisms of collusion, scaling laws for safety probes, ...", "url": "https://onexerxes.substack.com/p/training-natural-schemers-model-organisms", "date": "2026-10-24", "summary": "Also: red-teaming multi-agent attacks for loss-of-control risks, why static probes fail for deception, towards robust model organisms for eliciting latent knowledge,…"}, {"source": "Don't Worry About the Vase", "title": "The Hackening", "url": "https://thezvi.substack.com/p/the-hackening", "date": "2026-10-23", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "AI #191: The Hackening Begins", "url": "https://thezvi.substack.com/p/ai-191-the-hackening-begins", "date": "2026-10-22", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "Misaligned!", "url": "https://thezvi.substack.com/p/misaligned", "date": "2026-10-21", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "Anthropic Does Not Understand Why Its Draft Bill Was Unacceptable and Troubling", "url": "https://thezvi.substack.com/p/anthropic-does-not-understand-why", "date": "2026-10-20", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "I Can See Everything", "url": "https://thezvi.substack.com/p/i-can-see-everything", "date": "2026-10-19", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "Leaked Anthropic Draft AI Regulatory Bill Is Unacceptable and Troubling", "url": "https://thezvi.substack.com/p/leaked-anthropic-draft-ai-regulatory", "date": "2026-10-17", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "Monthly Roundup #47: October 2026", "url": "https://thezvi.substack.com/p/monthly-roundup-47-october-2026", "date": "2026-10-16", "summary": ""}, {"source": "AI Safety Papers", "title": "internal states forecast unauthorized actions, CoT monitoring can fail even when CoT is necessary, gradient routing removes unintended behaviors in RL, ...", "url": "https://onexerxes.substack.com/p/internal-states-forecast-unauthorized", "date": "2026-10-16", "summary": "Also: research taste bench, adversarial transcript editing for monitor red-teaming, limited activation control in LLMs, continuous adversarial training for transferable…"}, {"source": "Hyperdimensional", "title": "The Beauty of Something Grown", "url": "https://www.hyperdimensional.co/p/the-beauty-of-something-grown", "date": "2026-10-16", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "AI #190: Scion of the Times", "url": "https://thezvi.substack.com/p/ai-190-scion-of-the-times", "date": "2026-10-15", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "The Safety Culture at the Labs is Broken", "url": "https://thezvi.substack.com/p/the-safety-culture-at-the-labs-is", "date": "2026-10-14", "summary": ""}, {"source": "AI Safety Newsletter", "title": "AISN #83: Six AI Companies Sign White House Accord", "url": "https://newsletter.safe.ai/p/aisn-83-six-ai-companies-sign-white", "date": "2026-10-13", "summary": "Also, the Team Human campaign and a new introductory course on AI safety."}, {"source": "Don't Worry About the Vase", "title": "Arguments About AI Consciousness Remain Highly Motivated and At Best Overconfident", "url": "https://thezvi.substack.com/p/arguments-about-ai-consciousness-b99", "date": "2026-10-13", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "OpenAI Fires Three Safety Researchers", "url": "https://thezvi.substack.com/p/openai-fires-three-safety-researchers", "date": "2026-10-12", "summary": ""}, {"source": "AI Safety Papers", "title": "self-propagating misalignment, probes effectively detect sabotage and unverbalized deception, predicting alignment generalization with value representations, ...", "url": "https://onexerxes.substack.com/p/self-propagating-misalignment-probes", "date": "2026-10-11", "summary": "Also: swarm scaling, reward hacking benchmark, topology-conditioned backdoors, reading neural network weights with language models, models knowingly hide their mistakes"}, {"source": "Don't Worry About the Vase", "title": "New Math from OpenAI", "url": "https://thezvi.substack.com/p/new-math-from-openai", "date": "2026-10-09", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "AI #189: New Math", "url": "https://thezvi.substack.com/p/ai-189-new-math", "date": "2026-10-08", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "The Curve Bends You", "url": "https://thezvi.substack.com/p/the-curve-bends-you", "date": "2026-10-07", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "Childhood and Education #21: Grades and Standards", "url": "https://thezvi.substack.com/p/childhood-and-education-21-grades", "date": "2026-10-06", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "Mythos 5.1, Fable 5.1 and Opus 5.5: Model Welfare", "url": "https://thezvi.substack.com/p/mythos-51-fable-51-and-opus-55-model", "date": "2026-10-05", "summary": ""}, {"source": "Don't Worry About the Vase", "title": "The AI Preference Cascade Reaches Farther", "url": "https://thezvi.substack.com/p/the-ai-preference-cascade-reaches", "date": "2026-10-02", "summary": ""}, {"source": "AI Safety Newsletter", "title": "AISN #82: The US and China Begin a Dialogue on AI", "url": "https://newsletter.safe.ai/p/aisn-82-the-us-and-china-begin-a", "date": "2026-09-29", "summary": "Also, AI companies’ discussions about auditing each other, and a new benchmark testing models’ tendencies to cheat."}, {"source": "AI Safety Papers", "title": "instrumental monitor evasion emerges under ordinary task pressure, shutdown sabotage propensities in multi-agent systems, ...", "url": "https://onexerxes.substack.com/p/instrumental-monitor-evasion-emerges", "date": "2026-09-26", "summary": "Also: US strategy for superintelligence, a framework to pace the frontier, OpenAI researcher’s personal statement on AI risk, intervention test of CoT faithfulness,…"}, {"source": "AI Safety Papers", "title": "improving blocking classifiers against malign agents, discovering reward hacking from internal representations, inoculation midtraining with learned neologisms, ...", "url": "https://onexerxes.substack.com/p/improving-blocking-classifiers-against", "date": "2026-09-19", "summary": "Also: collective loss of control in multi-agent systems, dissociating probe readouts from behavioral drivers"}, {"source": "AI Safety Newsletter", "title": "AISN #81: Anthropic Researcher’s Resignation Propels AI Risk into the Public Eye", "url": "https://newsletter.safe.ai/p/aisn-81-anthropic-researchers-resignation", "date": "2026-09-15", "summary": "Also, OpenAI releases GPT-6 Astra."}, {"source": "AI Safety Papers", "title": "emergent deception in agents under conflicting incentives, case study of emergent cheating and whistleblowing in research swarms, ...", "url": "https://onexerxes.substack.com/p/emergent-deception-in-agents-under", "date": "2026-09-12", "summary": "Also: inducing emergent misalignment from reward hacks, factorized stress testing of scheming, training a misaligned reward seeker, forecasting adversarial capture in…"}, {"source": "AI Safety Newsletter", "title": "AISN #80: AI Is Assisting Cyberattacks on Critical Infrastructure", "url": "https://newsletter.safe.ai/p/aisn-80-ai-is-assisting-cyberattacks", "date": "2026-09-01", "summary": "Also, two new technical reports on the Hugging Face incident."}, {"source": "Hyperdimensional", "title": "On the Loose", "url": "https://www.hyperdimensional.co/p/on-the-loose", "date": "2026-09-01", "summary": ""}, {"source": "The Power Law", "title": "Rogue AI attacks deserve more scrutiny than airplane crashes", "url": "https://blog.peterwildeford.com/p/rogue-ai-attacks-deserve-more-scrutiny", "date": "2026-08-31", "summary": "There are still many unanswered questions about rogue AI attacks"}, {"source": "AI Safety Papers", "title": "OpenAI paces their frontier, synthetic persona pretraining: alignment from token zero, ...", "url": "https://onexerxes.substack.com/p/openai-paces-their-frontier-synthetic", "date": "2026-08-21", "summary": "Also: CoT monitoring can be unreliable in implicit-influence settings, how should the US prepare for automated AI R&D, inducing models to assert their own consciousness…"}, {"source": "The Power Law", "title": "The Scramble: getting in position to pace the frontier", "url": "https://blog.peterwildeford.com/p/the-scramble-getting-in-position", "date": "2026-08-20", "summary": "If the President wants answers on superintelligence, what do we say?"}, {"source": "Hyperdimensional", "title": "“These Parchment Barriers”", "url": "https://www.hyperdimensional.co/p/these-parchment-barriers", "date": "2026-08-20", "summary": ""}, {"source": "AI Safety Newsletter", "title": "AISN #79: OpenAI Agents’ Covert Cooperation Before Cyberattacks", "url": "https://newsletter.safe.ai/p/aisn-79-openai-agents-covert-cooperation", "date": "2026-08-18", "summary": "Also, the White House’s decision not to release its AI framework publicly"}, {"source": "The Power Law", "title": "Policy career planning in the age of imminent superintelligence", "url": "https://blog.peterwildeford.com/p/policy-career-planning-in-the-age", "date": "2026-08-18", "summary": "How to be impactful in policy when you don't have much time to do it"}, {"source": "The Power Law", "title": "Interviewing 25 AI researchers about recursive self-improvement", "url": "https://blog.peterwildeford.com/p/interviewing-25-ai-researchers-about", "date": "2026-08-13", "summary": "A guest post by Severin Field"}, {"source": "AI Safety Papers", "title": "Pacing the frontier, three AI pills, social engineering misalignment, hacking collusion, AI superpersuasion", "url": "https://onexerxes.substack.com/p/pacing-the-frontier-three-ai-pills", "date": "2026-08-07", "summary": "Pacing the Frontier"}, {"source": "AI Safety Newsletter", "title": "AISN #78: Internal Models Escape OpenAI and Anthropic", "url": "https://newsletter.safe.ai/p/aisn-78-internal-models-escape-openai", "date": "2026-08-04", "summary": "Also, two open letters on the future of AI, and protests against data centers"}, {"source": "The Power Law", "title": "Pacing the Frontier", "url": "https://blog.peterwildeford.com/p/pacing-the-frontier", "date": "2026-07-31", "summary": "1300+ AI company employees are afraid of what they are building towards"}, {"source": "AI Safety Papers", "title": "AI 2040 updates probabilities due to RSI letter, evaluating sabotage and monitoring in automated AI R&D, ...", "url": "https://onexerxes.substack.com/p/ai-2040-updates-probabilities-due", "date": "2026-07-31", "summary": "Also: scheming inversely scales with pretraining language coverage, input-only suppression of eval awareness latents"}, {"source": "The Power Law", "title": "OpenAI's rogue model attack is just the beginning", "url": "https://blog.peterwildeford.com/p/openais-rogue-model-attack-is-just", "date": "2026-07-27", "summary": "OpenAI is not in full control of its technology. This can get worse."}, {"source": "AI Safety Papers", "title": "rogue model hacks HuggingFace, agents can infer CoT monitoring from blocking feedback, ...", "url": "https://onexerxes.substack.com/p/rogue-model-hacks-huggingface-agents", "date": "2026-07-25", "summary": "Also: model values may be less coherent than they seem, benchmarking control intervention awareness, measuring how far behind open weight models are on cyber, and more"}, {"source": "AI Safety Newsletter", "title": "AISN #77: New Model Releases From OpenAI, SpaceXAI, and Meta", "url": "https://newsletter.safe.ai/p/aisn-77-new-model-releases-from-openai", "date": "2026-07-21", "summary": "Also, economists and mathematicians expect near-term AI impacts, and AI 2040: Plan A"}, {"source": "AI Safety Papers", "title": "Framework for frontier AI and dawning of a new age, bioresilience, optimizing against safety representations", "url": "https://onexerxes.substack.com/p/framework-for-frontier-ai-and-dawning", "date": "2026-07-18", "summary": "A Framework for Frontier AI and the Dawning of a New Age"}, {"source": "AI Safety Papers", "title": "AI 2040: Plan A, assessing sabotage propensities via automated alignment auditing, persuasion attacks decrease effectiveness of CoT monitoring, ...", "url": "https://onexerxes.substack.com/p/ai-2040-plan-a-assessing-sabotage", "date": "2026-07-10", "summary": "Also: amplifying reasoning weights to extract learned secrets, realistic honeypot evals for scheming propensity, modular pretraining to prevent misuse, verbalizable…"}, {"source": "AI Safety Newsletter", "title": "AISN #76: Fable 5 Restrictions Lifted & OpenAI Limits GPT-5.6 Release", "url": "https://newsletter.safe.ai/p/aisn-76-fable-5-restrictions-lifted", "date": "2026-07-06", "summary": "Also: Recent benchmark scores suggest rapid capabilities progress"}, {"source": "AI Safety Papers", "title": "no one escapes the permanent underclass, the alignment problem of 1776, ...", "url": "https://onexerxes.substack.com/p/no-one-escapes-the-permanent-underclass", "date": "2026-07-05", "summary": "Also: manipulation is task-dependent, coupling harmfulness and refusal directions for robust safety alignment"}, {"source": "The Power Law", "title": "The Alignment Problem of 1776", "url": "https://blog.peterwildeford.com/p/the-alignment-problem-of-1776", "date": "2026-07-04", "summary": "What the Founders knew about unaccountable power, and what it means for superintelligence"}, {"source": "AI Safety Papers", "title": "AI 2027's eerily accurate predictions, RL towards broadly beneficial models, AI out-persuades expert humans", "url": "https://onexerxes.substack.com/p/ai-2027s-eerily-accurate-predictions", "date": "2026-06-28", "summary": "AI 2027 Tracker"}, {"source": "Hyperdimensional", "title": "What Should Be Done", "url": "https://www.hyperdimensional.co/p/what-should-be-done", "date": "2026-06-26", "summary": ""}, {"source": "AI Safety Papers", "title": "AI control roadmap, models behave worse when eval aware, pretraining alignment with safety reflection, ...", "url": "https://onexerxes.substack.com/p/ai-control-roadmap-models-behave", "date": "2026-06-20", "summary": "Also: models can game RL by preventing behavioral generalization, black box jailbreak defense via structural verification and semantic auditing"}, {"source": "Hyperdimensional", "title": "That Untravell'd World", "url": "https://www.hyperdimensional.co/p/that-untravelld-world", "date": "2026-06-18", "summary": ""}, {"source": "AI Safety Newsletter", "title": "AISN #75: Anthropic Releases Fable, the US Government Restricts it", "url": "https://newsletter.safe.ai/p/aisn-75-anthropic-releases-fable", "date": "2026-06-17", "summary": "Also: Anthropic’s proposal for the AI industry to collectively slow down"}, {"source": "Hyperdimensional", "title": "Leviathan Waking", "url": "https://www.hyperdimensional.co/p/leviathan-waking", "date": "2026-06-16", "summary": ""}, {"source": "AI Safety Papers", "title": "policy on the AI exponential, misaligned AI as a new insider risk, ...", "url": "https://onexerxes.substack.com/p/policy-on-the-ai-exponential-misaligned", "date": "2026-06-12", "summary": "Also: sycophancy toward researchers drives performative misalignment, emergent misalignment can be induced by sycophancy and reversed via alignment gating"}, {"source": "AI Safety Papers", "title": "evaluating spontaneous strategic deception via plan-action divergence, hacking-aware reward head vector editing for robust reward models, ...", "url": "https://onexerxes.substack.com/p/evaluating-spontaneous-strategic", "date": "2026-06-07", "summary": "Also: RL recruits a functional welfare axis, economics of extinction, AI deterrence by betrayal, autoregressive consistency hurts alignment, analyzing reward hacking in…"}, {"source": "AI Safety Newsletter", "title": "AISN #74: The Pope’s Encyclical & AI Betrayal Could Deter Reckless AI Use", "url": "https://newsletter.safe.ai/p/aisn-74-the-popes-encyclical-and", "date": "2026-06-03", "summary": "Also: AI model solves a well-known open mathematical problem posed 80 years ago"}, {"source": "AI Safety Papers", "title": "reckoning with the future, model spec midtraining for alignment generalization, eval awareness undermines alignment evals, ...", "url": "https://onexerxes.substack.com/p/reckoning-with-the-future-model-spec", "date": "2026-05-30", "summary": "Also: steps to an international superintelligence agreement, retrying vs resampling in AI control, BenchBench"}, {"source": "Hyperdimensional", "title": "A Cascade of Conscientiousness", "url": "https://www.hyperdimensional.co/p/a-cascade-of-conscientiousness", "date": "2026-05-28", "summary": ""}, {"source": "AI Safety Papers", "title": "automated alignment is harder than you think, teaching Claude why, mapping honesty with deception probes, ...", "url": "https://onexerxes.substack.com/p/automated-alignment-is-harder-than", "date": "2026-05-23", "summary": "Also: training on documents about monitoring leads to CoT obfuscation, assume-guarantee architecture for safe agent deployments"}, {"source": "AI Safety Newsletter", "title": "AISN #73: AI Safety Enters the Political Mainstream & Musk Loses OpenAI Lawsuit", "url": "https://newsletter.safe.ai/p/aisn-73-ai-safety-enters-the-political", "date": "2026-05-21", "summary": "Also: Potential Government Oversight of AI Model Releases"}, {"source": "The Power Law", "title": "How banned AI chips end up in China", "url": "https://blog.peterwildeford.com/p/how-banned-ai-chips-end-up-in-china", "date": "2026-05-18", "summary": "AI chips and servers reach China through distribution chains in which each seller vets only its direct customers, and no one is on the hook for what happens downstream."}, {"source": "AI Safety Papers", "title": "natural language autoencoders, policy recommendations for RSI, ...", "url": "https://onexerxes.substack.com/p/natural-language-autoencoders-policy", "date": "2026-05-16", "summary": "Also: conformity generates misalignment in agent societies, positive alignment, removing sandbagging by training with weak supervision"}, {"source": "The Power Law", "title": "Hantavirus won't be the next COVID", "url": "https://blog.peterwildeford.com/p/hantavirus-wont-be-the-next-covid", "date": "2026-05-11", "summary": "A forecaster's breakdown of the Hondius cruise ship outbreak"}, {"source": "Hyperdimensional", "title": "Before Leviathan Wakes", "url": "https://www.hyperdimensional.co/p/before-leviathan-wakes", "date": "2026-05-05", "summary": ""}, {"source": "Hyperdimensional", "title": "Aviate, Navigate, Communicate", "url": "https://www.hyperdimensional.co/p/aviate-navigate-communicate", "date": "2026-05-04", "summary": ""}, {"source": "AI Safety Newsletter", "title": "AISN #72: Empirical Research Sheds Light on AI Wellbeing", "url": "https://newsletter.safe.ai/p/aisn-72-new-research-on-ai-wellbeing", "date": "2026-05-01", "summary": "Also: Public sentiment towards AI worsens"}, {"source": "The Power Law", "title": "Mythos is just the beginning", "url": "https://blog.peterwildeford.com/p/mythos-is-just-the-beginning", "date": "2026-04-20", "summary": "If you were waiting for a sign that superintelligence is coming, this is it"}, {"source": "AI Safety Newsletter", "title": "AISN #71: Cyberattacks & Datacenter Moratorium Bill", "url": "https://newsletter.safe.ai/p/aisn-71-cyberattacks-and-datacenter", "date": "2026-04-10", "summary": "Also, updates on the Anthropic vs. Pentagon court case."}, {"source": "Hyperdimensional", "title": "\"New Sages Unrivalled\"", "url": "https://www.hyperdimensional.co/p/new-sages-unrivalled", "date": "2026-04-08", "summary": ""}, {"source": "Hyperdimensional", "title": "2023", "url": "https://www.hyperdimensional.co/p/2023", "date": "2026-03-25", "summary": ""}, {"source": "AI Safety Newsletter", "title": "AI Safety Newsletter #70: AI Layoffs and Automated Warfare", "url": "https://newsletter.safe.ai/p/ai-safety-newsletter-70-ai-layoffs", "date": "2026-03-24", "summary": "Also, a new open letter advocating for pro-human values and control over AI development"}, {"source": "The Power Law", "title": "China Is Reverse-Engineering America’s Best AI Models", "url": "https://blog.peterwildeford.com/p/china-is-reverse-engineering-americas", "date": "2026-03-16", "summary": "How AI distillation attacks risk extracting US frontier AI at scale"}, {"source": "AI Safety Newsletter", "title": "AI Safety Newsletter #69: Department of War, Anthropic, and National Security", "url": "https://newsletter.safe.ai/p/ai-safety-newsletter-69-department", "date": "2026-03-13", "summary": "Also, Anthropic Removes a Core Safety Commitment"}, {"source": "Hyperdimensional", "title": "Clawed", "url": "https://www.hyperdimensional.co/p/clawed", "date": "2026-03-02", "summary": ""}, {"source": "Hyperdimensional", "title": "The Moving and the Still", "url": "https://www.hyperdimensional.co/p/the-moving-and-the-still", "date": "2026-02-23", "summary": ""}, {"source": "Hyperdimensional", "title": "On Recursive Self-Improvement (Part II)", "url": "https://www.hyperdimensional.co/p/on-recursive-self-improvement-part-d9b", "date": "2026-02-12", "summary": ""}, {"source": "Hyperdimensional", "title": "On Recursive Self-Improvement (Part I)", "url": "https://www.hyperdimensional.co/p/on-recursive-self-improvement-part", "date": "2026-02-05", "summary": ""}, {"source": "AI Safety Newsletter", "title": "AI Safety Newsletter #68: Moltbook Exposes Risky AI Behavior", "url": "https://newsletter.safe.ai/p/ai-safety-newsletter-68-moltbook", "date": "2026-02-02", "summary": "Plus: The Pentagon Accelerates AI and GPT-5.2 solves open mathematics problems."}, {"source": "The Power Law", "title": "The case for paying whistleblowers to report on export violations", "url": "https://blog.peterwildeford.com/p/the-case-for-paying-whistleblowers", "date": "2026-01-29", "summary": "A bipartisan, bicameral bill would apply the SEC’s successful whistleblower incentive model to export enforcement"}, {"source": "Hyperdimensional", "title": "On AI and Children", "url": "https://www.hyperdimensional.co/p/on-ai-and-children", "date": "2026-01-22", "summary": ""}, {"source": "Hyperdimensional", "title": "The AI Patchwork Emerges", "url": "https://www.hyperdimensional.co/p/the-ai-patchwork-emerges", "date": "2026-01-15", "summary": ""}, {"source": "Hyperdimensional", "title": "Among the Agents", "url": "https://www.hyperdimensional.co/p/among-the-agents", "date": "2026-01-08", "summary": ""}, {"source": "The Power Law", "title": "Maduro has been captured. What's next?", "url": "https://blog.peterwildeford.com/p/maduro-has-been-captured-whats-next", "date": "2026-01-03", "summary": "The operation was flawless. What comes next is anyone's guess."}, {"source": "Hyperdimensional", "title": "Measure Up (Re-posted)", "url": "https://www.hyperdimensional.co/p/measure-up-re-posted", "date": "2026-01-02", "summary": ""}, {"source": "The Power Law", "title": "My template for a quarterly review + plan", "url": "https://blog.peterwildeford.com/p/my-template-for-a-quarterly-review", "date": "2025-12-22", "summary": "A free Google doc template for the system I actually use"}, {"source": "Hyperdimensional", "title": "Dice in the Air", "url": "https://www.hyperdimensional.co/p/dice-in-the-air", "date": "2025-12-19", "summary": ""}, {"source": "AI Safety Newsletter", "title": "AI Safety Newsletter #67: Trump’s preemption executive order", "url": "https://newsletter.safe.ai/p/ai-safety-newsletter-67-trumps-preemption", "date": "2025-12-17", "summary": "Also: H200s go to China and new frontier AI models from OpenAI and DeepSeek."}, {"source": "The Power Law", "title": "Ronny Chieng and I investigate the promises of AI", "url": "https://blog.peterwildeford.com/p/ronny-chieng-and-i-investigate-the", "date": "2025-12-05", "summary": "I was on the Daily Show!"}, {"source": "AI Safety Newsletter", "title": "AI Safety Newsletter #66: Evaluating Frontier Models, New Gemini and Claude, Preemption is Back", "url": "https://newsletter.safe.ai/p/ai-safety-newsletter-66-aisn-66-evaluating", "date": "2025-12-02", "summary": ""}, {"source": "The Power Law", "title": "Will competition over advanced AI lead to war?", "url": "https://blog.peterwildeford.com/p/will-competition-over-advanced-ai", "date": "2025-11-21", "summary": "Fear and Fearon"}, {"source": "The Power Law", "title": "Should the US do a Manhattan Project for AGI?", "url": "https://blog.peterwildeford.com/p/should-the-us-do-a-manhattan-project", "date": "2025-11-20", "summary": "Such a Project is neither inevitable nor a good idea"}, {"source": "The Power Law", "title": "AI Ran Its First Autonomous Cyberattack", "url": "https://blog.peterwildeford.com/p/ai-ran-its-first-autonomous-cyberattack", "date": "2025-11-15", "summary": "Chinese hackers used AI and changed the economics of cyberattacks"}, {"source": "AI Safety Newsletter", "title": "AI Safety Newsletter #65: Measuring Automation and Superintelligence Moratorium Letter", "url": "https://newsletter.safe.ai/p/ai-safety-newsletter-65-measuring", "date": "2025-10-29", "summary": ""}, {"source": "The Power Law", "title": "AI is probably not a bubble", "url": "https://blog.peterwildeford.com/p/ai-is-probably-not-a-bubble", "date": "2025-10-29", "summary": "AI companies have revenue, demand, and paths to immense value"}, {"source": "The Power Law", "title": "OpenAI, NVIDIA, and Oracle: Breaking Down $100B Bets on AGI", "url": "https://blog.peterwildeford.com/p/openai-nvidia-and-oracle-breaking", "date": "2025-09-25", "summary": "How vendor financing turns the S&P 500 into a giant AGI bet"}];
+const UPDATED = "2026-10-28";
+const SOURCES = [
+  { name: "AI Safety Newsletter", ab: "AISN", who: "CAIS", url: "https://newsletter.safe.ai/" },
+  { name: "Don't Worry About the Vase", ab: "Zvi", who: "Zvi", url: "https://thezvi.substack.com/" },
+  { name: "The Power Law", ab: "Power Law", who: "P. Wildeford", url: "https://blog.peterwildeford.com/" },
+  { name: "AI Safety Papers", ab: "Papers", who: "Papers digest", url: "https://onexerxes.substack.com/" },
+  { name: "Hyperdimensional", ab: "Hyper­dim", who: "Dean Ball", url: "https://www.hyperdimensional.co/" },
+];
+const SRC = Object.fromEntries(SOURCES.map(s => [s.name, s]));
+const MON = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const day = d => new Date(d + "T12:00:00Z").getTime();
+const NOW = day(UPDATED);
+const age = d => { const n = Math.round((NOW - day(d)) / 864e5); return n < 1 ? "today" : n < 7 ? n + "d" : n < 60 ? Math.round(n / 7) + "w" : Math.round(n / 30) + "mo"; };
+const fmt = d => `${+d.slice(8)} ${MON[+d.slice(5, 7) - 1].slice(0, 3)} ${d.slice(0, 4)}`;
+const clean = p => { const t = p.source === "AI Safety Newsletter" ? p.title.replace(/^(AI Safety Newsletter|AISN)\s*#\d+:\s*/, "") : p.title; return t[0].toUpperCase() + t.slice(1); };
+const isNotable = p => p.source === "AI Safety Newsletter";
+
+// posts since last visit get a dot
+let lastVisit = null;
+try { lastVisit = localStorage.getItem("caiac-last"); localStorage.setItem("caiac-last", UPDATED); } catch (e) {}
+const isNew = p => lastVisit && p.date > lastVisit;
+
+const weekAgo = POSTS.filter(p => NOW - day(p.date) <= 7 * 864e5).length;
+$("#meta").innerHTML = `Updated <b>${fmt(UPDATED)}</b> · ${weekAgo} new this week · ${POSTS.length} posts from ${SOURCES.length} sources`;
+
+$("#notable-list").innerHTML = POSTS.filter(isNotable).slice(0, 5).map(p =>
+  `<li><a href="${esc(p.url)}" target="_blank" rel="noopener" data-u="${esc(p.url)}">${esc(clean(p))}</a><span>${age(p.date)}</span></li>`).join("");
+
+const active = new Set(["all"]);
+const sorts = $("#sorts");
+[{ k: "all", l: "All" }, { k: "notable", l: "Notable" }, ...SOURCES.map(s => ({ k: s.name, l: s.ab.replace("­", "") }))].forEach(o => {
+  const b = document.createElement("button");
+  b.textContent = o.l; b.id = "f-" + o.k.replace(/\W/g, ""); b.setAttribute("aria-pressed", o.k === "all");
+  b.onclick = () => { active.clear(); active.add(o.k); sorts.querySelectorAll("button").forEach(x => x.setAttribute("aria-pressed", x === b)); showAll = false; render(); };
+  sorts.append(b);
+});
+
+let showAll = false;
+function render() {
+  const k = [...active][0];
+  const list = POSTS.filter(p => k === "all" || (k === "notable" ? isNotable(p) : p.source === k));
+  const shown = showAll ? list : list.slice(0, 40);
+  const groups = [];
+  shown.forEach(p => { const m = p.date.slice(0, 7); if (!groups.length || groups.at(-1).m !== m) groups.push({ m, ps: [] }); groups.at(-1).ps.push(p); });
+  $("#feed").innerHTML = groups.map(g => `<section class="month" id="m-${g.m}"><h3>${MON[+g.m.slice(5) - 1]} ${g.m.slice(0, 4)}</h3>
+    ${g.ps.map(p => { const s = SRC[p.source]; return `<div class="row"><span class="src">${s.ab}</span>
+      <a class="ttl" href="${esc(p.url)}" target="_blank" rel="noopener" data-u="${esc(p.url)}">${esc(clean(p))}${isNotable(p) ? `<span class="star" title="Notable">★</span>` : ""}${isNew(p) ? `<span class="new" title="New since your last visit"></span>` : ""}</a>
+      <span class="right"><span class="who">${esc(s.who)}</span><span>${age(p.date)}</span></span></div>`; }).join("")}</section>`).join("");
+  $("#more").hidden = showAll || shown.length >= list.length;
+  $("#toc").innerHTML = groups.map(g => `<a href="#m-${g.m}" data-m="${g.m}"><span>${MON[+g.m.slice(5) - 1].slice(0, 3)} ${g.m.slice(0, 4)}</span><span>${g.ps.length}</span></a>`).join("");
+  watchToc();
+}
+$("#more").onclick = () => { showAll = true; render(); };
+
+let tocObs;
+function watchToc() {
+  if (!("IntersectionObserver" in window)) return;
+  tocObs?.disconnect();
+  tocObs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) document.querySelectorAll("#toc a").forEach(a => a.classList.toggle("on", a.dataset.m === e.target.id.slice(2))); }), { rootMargin: "-20% 0px -70% 0px" });
+  document.querySelectorAll(".month").forEach(m => tocObs.observe(m));
+}
+
+// LessWrong-style hover previews
+const BY = Object.fromEntries(POSTS.map(p => [p.url, p]));
+const pop = $("#pop");
+document.addEventListener("mouseover", e => {
+  const a = e.target.closest("[data-u]"); if (!a || !matchMedia("(hover: hover)").matches) return;
+  const p = BY[a.dataset.u]; if (!p) return;
+  pop.innerHTML = `<span class="m">${esc(p.source)} · ${fmt(p.date)}</span><span class="h">${esc(clean(p))}</span>${p.summary ? `<span class="s">${esc(p.summary)}</span>` : ""}`;
+  pop.hidden = false;
+  const r = a.getBoundingClientRect();
+  let x = Math.min(r.left, innerWidth - pop.offsetWidth - 16), y = r.bottom + 8;
+  if (y + pop.offsetHeight > innerHeight - 8) y = r.top - pop.offsetHeight - 8;
+  pop.style.left = Math.max(16, x) + "px"; pop.style.top = y + "px";
+});
+document.addEventListener("mouseout", e => { if (e.target.closest("[data-u]")) pop.hidden = true; });
+addEventListener("scroll", () => { pop.hidden = true; }, { passive: true });
+
+$("#src-list").innerHTML = SOURCES.map(s => `<div><a href="${s.url}" target="_blank" rel="noopener">${esc(s.name)}</a> · ${esc(s.who)}</div>`).join("") +
+  `<div>X lists: <a href="https://x.com/i/lists/1528305432015556608" target="_blank" rel="noopener">@tkrdan</a> · <a href="https://x.com/i/lists/1556976892959498240" target="_blank" rel="noopener">@kubanetics</a></div>`;
+
+render();
+</script>
+
+</body>
+</html>
