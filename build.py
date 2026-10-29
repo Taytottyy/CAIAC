@@ -17,11 +17,24 @@ FEEDS = {
 NO_SUMMARY = {"Don't Worry About the Vase", "Hyperdimensional"}  # their feed descriptions are fragments
 
 
+HEADERS = {
+    "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36",
+    "Accept": "application/rss+xml, application/xml;q=0.9, */*;q=0.8",
+}
+
+
 def fetch():
-    posts = []
+    old = json.loads((HERE / "posts.json").read_text()) if (HERE / "posts.json").exists() else []
+    posts, failed = [], []
     for host, name in FEEDS.items():
-        req = urllib.request.Request(f"https://{host}/feed", headers={"User-Agent": "Mozilla/5.0"})
-        root = ET.fromstring(urllib.request.urlopen(req, timeout=30).read())
+        try:
+            req = urllib.request.Request(f"https://{host}/feed", headers=HEADERS)
+            root = ET.fromstring(urllib.request.urlopen(req, timeout=30).read())
+        except Exception as e:  # keep the last good posts for a feed that fails
+            print(f"{name}: {e}; keeping previous posts")
+            failed.append(name)
+            posts += [p for p in old if p["source"] == name]
+            continue
         for it in root.iter("item"):
             desc = re.sub("<[^>]+>", "", html.unescape(it.findtext("description") or "")).strip()
             if name in NO_SUMMARY or desc.startswith("Welcome to") or len(desc) < 15:
@@ -37,6 +50,8 @@ def fetch():
             })
     posts.sort(key=lambda p: p["date"], reverse=True)
     (HERE / "posts.json").write_text(json.dumps(posts, indent=1, ensure_ascii=False))
+    if len(failed) == len(FEEDS):
+        sys.exit("every feed failed; posts.json left unchanged")
 
 
 def build():
