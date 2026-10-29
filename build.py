@@ -1,4 +1,4 @@
-"""Fetch the five Substack RSS feeds and rebuild index.html.
+"""Fetch the five newsletter RSS feeds and rebuild index.html.
 
 Usage: python3 build.py            (fetch + build)
        python3 build.py --no-fetch (rebuild from posts.json)
@@ -8,12 +8,14 @@ import xml.etree.ElementTree as ET
 
 HERE = pathlib.Path(__file__).parent
 FEEDS = {
-    "newsletter.safe.ai": "AI Safety Newsletter",
-    "thezvi.substack.com": "Don't Worry About the Vase",
-    "blog.peterwildeford.com": "The Power Law",
-    "onexerxes.substack.com": "AI Safety Papers",
-    "www.hyperdimensional.co": "Hyperdimensional",
+    "AI Safety Newsletter": "https://newsletter.safe.ai/feed",
+    # Substack blocks GitHub Actions on *.substack.com; Zvi's WordPress mirror is reachable
+    "Don't Worry About the Vase": "https://thezvi.wordpress.com/feed/",
+    "The Power Law": "https://blog.peterwildeford.com/feed",
+    "AI Safety Papers": "https://onexerxes.substack.com/feed",
+    "Hyperdimensional": "https://www.hyperdimensional.co/feed",
 }
+PER_SOURCE = 20
 NO_SUMMARY = {"Don't Worry About the Vase", "Hyperdimensional"}  # their feed descriptions are fragments
 
 
@@ -26,28 +28,36 @@ HEADERS = {
 def fetch():
     old = json.loads((HERE / "posts.json").read_text()) if (HERE / "posts.json").exists() else []
     posts, failed = [], []
-    for host, name in FEEDS.items():
+    for name, url in FEEDS.items():
         try:
-            req = urllib.request.Request(f"https://{host}/feed", headers=HEADERS)
+            req = urllib.request.Request(url, headers=HEADERS)
             root = ET.fromstring(urllib.request.urlopen(req, timeout=30).read())
         except Exception as e:  # keep the last good posts for a feed that fails
             print(f"{name}: {e}; keeping previous posts")
             failed.append(name)
             posts += [p for p in old if p["source"] == name]
             continue
+        prev = {p["title"]: p for p in old if p["source"] == name}
+        fresh = []
         for it in root.iter("item"):
             desc = re.sub("<[^>]+>", "", html.unescape(it.findtext("description") or "")).strip()
             if name in NO_SUMMARY or desc.startswith("Welcome to") or len(desc) < 15:
                 desc = ""
             elif len(desc) > 170:
                 desc = desc[:170].rsplit(" ", 1)[0] + "…"
-            posts.append({
+            title = (it.findtext("title") or "").strip()
+            fresh.append({
                 "source": name,
-                "title": (it.findtext("title") or "").strip(),
-                "url": it.findtext("link"),
+                "title": title,
+                # keep a post's original link (e.g. Substack) once we have one
+                "url": prev[title]["url"] if title in prev else it.findtext("link"),
                 "date": email.utils.parsedate_to_datetime(it.findtext("pubDate")).strftime("%Y-%m-%d"),
                 "summary": desc,
             })
+        # short feeds (WordPress gives 10 items) are topped up with earlier posts
+        titles = {p["title"] for p in fresh}
+        merged = fresh + [p for p in prev.values() if p["title"] not in titles]
+        posts += sorted(merged, key=lambda p: p["date"], reverse=True)[:PER_SOURCE]
     posts.sort(key=lambda p: p["date"], reverse=True)
     (HERE / "posts.json").write_text(json.dumps(posts, indent=1, ensure_ascii=False))
     if len(failed) == len(FEEDS):
