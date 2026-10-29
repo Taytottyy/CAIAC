@@ -19,3 +19,5 @@ python3 build.py
 ```
 
 This fetches each Substack's RSS feed, saves the result to `posts.json`, and rebuilds `index.html` from `template.html`. To rebuild without fetching, run `python3 build.py --no-fetch`.
+
+A GitHub Action (`.github/workflows/refresh.yml`) does this every day at 13:00 UTC and commits the result. You can also run it by hand from the Actions tab.
