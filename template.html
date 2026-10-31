@@ -22,6 +22,10 @@ a { color: inherit; text-decoration: none }
 :focus-visible { outline: 2px solid var(--green); outline-offset: 2px }
 body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg) }
 
+.note { background: var(--hover); border-bottom: 1px solid var(--rule); color: var(--ink-2); font-size: 13.5px; text-align: center; padding-block: 8px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
+.note a { color: var(--green) }
+.note a:hover { text-decoration: underline }
 .bar { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--rule);
   padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)) }
 .bar-in { max-width: 1100px; margin: 0 auto; height: 56px; display: flex; align-items: center; justify-content: space-between }
@@ -97,6 +101,7 @@ h1 { font-family: var(--sans); font-weight: 600; font-size: clamp(28px, 6vw, 39p
 }
 </style>
 
+<div class="note">If you have any comments or want to exchange ideas, email <a href="mailto:ry2543@columbia.edu">ry2543@columbia.edu</a></div>
 <header class="bar"><div class="bar-in">
   <a class="logo" href="#top">CAIAC</a>
   <nav class="bar-links"><a href="#notable">Notable</a><a href="#sources">Sources</a></nav>
