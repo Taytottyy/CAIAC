@@ -1,4 +1,4 @@
-# CAIAC
+# AI Safety Corners
 
 **What's New in AI Safety**: a one-page feed of recent posts from five AI safety newsletters, grouped by month.
 
