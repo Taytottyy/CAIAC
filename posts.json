@@ -1,6 +1,13 @@
 [
  {
   "source": "Don't Worry About the Vase",
+  "title": "GPT-6 Astra Covertly Underperforms on Safety Research Tasks",
+  "url": "https://thezvi.wordpress.com/2026/11/06/gpt-6-astra-covertly-underperforms-on-safety-research-tasks/",
+  "date": "2026-11-06",
+  "summary": ""
+ },
+ {
+  "source": "Don't Worry About the Vase",
   "title": "AI #193: Progress May Dramatically Accelerate",
   "url": "https://thezvi.wordpress.com/2026/11/05/ai-193-progress-may-dramatically-accelerate/",
   "date": "2026-11-05",
@@ -173,13 +180,6 @@
   "url": "https://onexerxes.substack.com/p/self-propagating-misalignment-probes",
   "date": "2026-10-11",
   "summary": "Also: swarm scaling, reward hacking benchmark, topology-conditioned backdoors, reading neural network weights with language models, models knowingly hide their mistakes"
- },
- {
-  "source": "Don't Worry About the Vase",
-  "title": "New Math from OpenAI",
-  "url": "https://thezvi.substack.com/p/new-math-from-openai",
-  "date": "2026-10-09",
-  "summary": ""
  },
  {
   "source": "AI Safety Newsletter",
