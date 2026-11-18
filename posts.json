@@ -1,6 +1,20 @@
 [
  {
   "source": "Don't Worry About the Vase",
+  "title": "Quickly, There’s No Time",
+  "url": "https://thezvi.wordpress.com/2026/11/18/quickly-theres-no-time/",
+  "date": "2026-11-18",
+  "summary": ""
+ },
+ {
+  "source": "Hyperdimensional",
+  "title": "The Silent Consensus",
+  "url": "https://www.hyperdimensional.co/p/the-silent-consensus",
+  "date": "2026-11-18",
+  "summary": ""
+ },
+ {
+  "source": "Don't Worry About the Vase",
   "title": "Jensen Huang Really Liked Selling China Advanced AI Chips",
   "url": "https://thezvi.wordpress.com/2026/11/17/jensen-huang-really-liked-selling-china-advanced-ai-chips/",
   "date": "2026-11-17",
@@ -12,6 +26,13 @@
   "url": "https://thezvi.wordpress.com/2026/11/16/fable-5-2-is-the-new-bazooka/",
   "date": "2026-11-16",
   "summary": ""
+ },
+ {
+  "source": "AI Safety Papers",
+  "title": "“going badly” activations drive reward hacking, what rewarding misbehavior during RL does to character-trained models, mechanistic understanding of uncertainty quantification",
+  "url": "https://onexerxes.substack.com/p/going-badly-activations-drive-reward",
+  "date": "2026-11-14",
+  "summary": "Breaking Bad: “Going Badly” Activations Drive Reward Hacking"
  },
  {
   "source": "Don't Worry About the Vase",
@@ -70,6 +91,13 @@
   "summary": ""
  },
  {
+  "source": "AI Safety Papers",
+  "title": "stress testing CoT monitoring against covert misalignment, training models against their own beliefs can induce misalignment, ...",
+  "url": "https://onexerxes.substack.com/p/stress-testing-cot-monitoring-against",
+  "date": "2026-11-06",
+  "summary": "Also: framework for predicting loss of control, suppressing misaligned behaviors durably, towards interpreting any residual steam direction by scaling activation…"
+ },
+ {
   "source": "Don't Worry About the Vase",
   "title": "AI #193: Progress May Dramatically Accelerate",
   "url": "https://thezvi.wordpress.com/2026/11/05/ai-193-progress-may-dramatically-accelerate/",
@@ -89,6 +117,13 @@
   "url": "https://thezvi.wordpress.com/2026/11/02/scott-alexanders-against-sura-seems-deeply-confused/",
   "date": "2026-11-02",
   "summary": ""
+ },
+ {
+  "source": "AI Safety Papers",
+  "title": "exposing alignment faking using synthetic document fine-tuning, formal analysis hints improve weak-to-strong monitoring, ...",
+  "url": "https://onexerxes.substack.com/p/exposing-alignment-faking-using-synthetic",
+  "date": "2026-10-31",
+  "summary": "Also: interpretable sparse fine-tuning enables faithful circuit discovery, your agent acts differently when you’re around, benchmarking deception under pressure"
  },
  {
   "source": "Don't Worry About the Vase",
@@ -158,13 +193,6 @@
   "title": "Misaligned!",
   "url": "https://thezvi.substack.com/p/misaligned",
   "date": "2026-10-21",
-  "summary": ""
- },
- {
-  "source": "Don't Worry About the Vase",
-  "title": "Anthropic Does Not Understand Why Its Draft Bill Was Unacceptable and Troubling",
-  "url": "https://thezvi.substack.com/p/anthropic-does-not-understand-why",
-  "date": "2026-10-20",
   "summary": ""
  },
  {
@@ -441,25 +469,11 @@
   "summary": "Also: AI model solves a well-known open mathematical problem posed 80 years ago"
  },
  {
-  "source": "AI Safety Papers",
-  "title": "reckoning with the future, model spec midtraining for alignment generalization, eval awareness undermines alignment evals, ...",
-  "url": "https://onexerxes.substack.com/p/reckoning-with-the-future-model-spec",
-  "date": "2026-05-30",
-  "summary": "Also: steps to an international superintelligence agreement, retrying vs resampling in AI control, BenchBench"
- },
- {
   "source": "Hyperdimensional",
   "title": "A Cascade of Conscientiousness",
   "url": "https://www.hyperdimensional.co/p/a-cascade-of-conscientiousness",
   "date": "2026-05-28",
   "summary": ""
- },
- {
-  "source": "AI Safety Papers",
-  "title": "automated alignment is harder than you think, teaching Claude why, mapping honesty with deception probes, ...",
-  "url": "https://onexerxes.substack.com/p/automated-alignment-is-harder-than",
-  "date": "2026-05-23",
-  "summary": "Also: training on documents about monitoring leads to CoT obfuscation, assume-guarantee architecture for safe agent deployments"
  },
  {
   "source": "AI Safety Newsletter",
@@ -474,13 +488,6 @@
   "url": "https://blog.peterwildeford.com/p/how-banned-ai-chips-end-up-in-china",
   "date": "2026-05-18",
   "summary": "AI chips and servers reach China through distribution chains in which each seller vets only its direct customers, and no one is on the hook for what happens downstream."
- },
- {
-  "source": "AI Safety Papers",
-  "title": "natural language autoencoders, policy recommendations for RSI, ...",
-  "url": "https://onexerxes.substack.com/p/natural-language-autoencoders-policy",
-  "date": "2026-05-16",
-  "summary": "Also: conformity generates misalignment in agent societies, positive alignment, removing sandbagging by training with weak supervision"
  },
  {
   "source": "The Power Law",
@@ -628,13 +635,6 @@
   "url": "https://blog.peterwildeford.com/p/maduro-has-been-captured-whats-next",
   "date": "2026-01-03",
   "summary": "The operation was flawless. What comes next is anyone's guess."
- },
- {
-  "source": "Hyperdimensional",
-  "title": "Measure Up (Re-posted)",
-  "url": "https://www.hyperdimensional.co/p/measure-up-re-posted",
-  "date": "2026-01-02",
-  "summary": ""
  },
  {
   "source": "The Power Law",
