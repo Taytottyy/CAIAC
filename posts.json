@@ -1,5 +1,19 @@
 [
  {
+  "source": "AI Safety Newsletter",
+  "title": "AISN #86: Anthropic Accused of Recklessness as it Goes Public",
+  "url": "https://newsletter.safe.ai/p/aisn-86-anthropic-accused-of-recklessness",
+  "date": "2026-11-24",
+  "summary": "Also, AI companies face loss-of-control lawsuits and Jensen Huang returns as Nvidia CEO."
+ },
+ {
+  "source": "Don't Worry About the Vase",
+  "title": "Jensen Huang Reinstated As Nvidia CEO at Behest of President Trump",
+  "url": "https://thezvi.wordpress.com/2026/11/24/jensen-huang-reinstated-as-nvidia-ceo-at-behest-of-president-trump/",
+  "date": "2026-11-24",
+  "summary": ""
+ },
+ {
   "source": "Don't Worry About the Vase",
   "title": "GPT-6.2 Astra and Sol: The System Card",
   "url": "https://thezvi.wordpress.com/2026/11/21/gpt-6-2-astra-and-sol-the-system-card/",
@@ -187,13 +201,6 @@
   "url": "https://onexerxes.substack.com/p/training-natural-schemers-model-organisms",
   "date": "2026-10-24",
   "summary": "Also: red-teaming multi-agent attacks for loss-of-control risks, why static probes fail for deception, towards robust model organisms for eliciting latent knowledge,…"
- },
- {
-  "source": "Don't Worry About the Vase",
-  "title": "The Hackening",
-  "url": "https://thezvi.substack.com/p/the-hackening",
-  "date": "2026-10-23",
-  "summary": ""
  },
  {
   "source": "AI Safety Papers",
@@ -656,13 +663,6 @@
   "url": "https://blog.peterwildeford.com/p/ronny-chieng-and-i-investigate-the",
   "date": "2025-12-05",
   "summary": "I was on the Daily Show!"
- },
- {
-  "source": "AI Safety Newsletter",
-  "title": "AI Safety Newsletter #66: Evaluating Frontier Models, New Gemini and Claude, Preemption is Back",
-  "url": "https://newsletter.safe.ai/p/ai-safety-newsletter-66-aisn-66-evaluating",
-  "date": "2025-12-02",
-  "summary": ""
  },
  {
   "source": "The Power Law",
